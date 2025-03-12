@@ -28,4 +28,7 @@ fs.readFileSync("./example.txt", "utf-8", (err, data) => {
   if (err) return err;
   console.log(data);
 });
-console.log("Nothing");
+const path = require("path");
+console.log(path.extname("./show.js"));
+console.log(path.basename("./show.js"));
+console.log(path.dirname("./show.js"));
