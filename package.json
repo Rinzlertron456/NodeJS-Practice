@@ -10,6 +10,8 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.2",
-    "nodejs-practice": "file:"
+    "nodejs-practice": "file:",
+    "nodemon": "^3.1.9",
+    "pokemon": "^3.3.0"
   }
 }

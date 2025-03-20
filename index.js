@@ -32,3 +32,16 @@ const path = require("path");
 console.log(path.extname("./show.js"));
 console.log(path.basename("./show.js"));
 console.log(path.dirname("./show.js"));
+
+//OS related functions
+const os = require("os");
+console.log(os.platform);
+console.log(os.release);
+console.log(os.hostname);
+
+//Routing and http server configuration
+const https = require("https");
+const server = https.createServer((req, res) => {
+  res.end("Hello, World!");
+});
+server.listen(2000);
