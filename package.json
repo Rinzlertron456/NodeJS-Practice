@@ -8,11 +8,20 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "express": "^4.21.2",
     "nodejs-practice": "file:",
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.10",
     "pokemon": "^3.3.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rinzlertron456/NodeJS-Practice.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Rinzlertron456/NodeJS-Practice/issues"
+  },
+  "homepage": "https://github.com/Rinzlertron456/NodeJS-Practice#readme",
+  "description": ""
 }
