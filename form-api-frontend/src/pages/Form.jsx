@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link, useNavigate } from 'react-router-dom';
 
 const Form = () => {
   const [data,setData] = useState({
     email:'',
     password:'',
   });
+  const navigate=useNavigate();
   const handleData=async(e)=>{
     e.preventDefault();
     console.log(data);
-    await axios.post('http://localhost:3000/form',data);
+    const respose=await axios.post('http://localhost:3000/form',data);
+    navigate("/user")
   }
   return (
     <>
