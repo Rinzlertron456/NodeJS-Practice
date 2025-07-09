@@ -13,7 +13,7 @@ const Form = () => {
     e.preventDefault();
     console.log(data);
     const respose=await axios.post('http://localhost:3000/form',data);
-    navigate("/user")
+    navigate("/user",{state:data})
   }
   return (
     <>

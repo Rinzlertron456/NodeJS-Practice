@@ -37,8 +37,7 @@ app.post("/form",(req,res)=>{
 })
 
 app.get("/user",(req,res)=>{
-  console.log(req.body);
-  
+  const data = connection.query("SELECT * FROM dummydata WHERE email=")
 })
 
 app.listen(port,()=>{
