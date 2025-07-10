@@ -1,46 +1,72 @@
-//RESTFul APIs using Node.js(Express.js)
-const express=require("express")
-const cors=require("cors");
-const { createPool } =require('mysql2')
-const app=express();
-const port=3000;
+const express = require('express');
+const cors = require('cors');
+const { createConnection } = require('mysql2');
+const app = express();
+const port = 3000;
+
 app.use(express.json());
 app.use(cors());
 
-const connection = createPool({
-  host:"localhost",
-  user:"root",
-  password:"V1ky20#.^^^",
-  database:"nodemysql",
-  port:3306,
-})
+const connection = createConnection({
+  host: "localhost",
+  user: "root",
+  password: "V1ky20#.^^^",
+  database: "nodemysql",
+  port: 3306,
+});
 
-app.get("/",(req,res)=>{
+connection.connect((err) => {
+  if (err) throw err;
+  console.log('Connected to the database.');
+});
+
+app.get("/", (req, res) => {
   res.send("Hello. Welcome to Home page");
-})
-app.post("/form",(req,res)=>{ 
+});
+
+app.post("/form", (req, res) => {
   console.log(req.body);
-  connection.query("CREATE TABLE IF NOT EXISTS dummydata ( email varchar(45), password varchar(45))",(error,results)=>{
-    if(error){
-      console.log("Error creating table",error);
-    }
-    return;
-  })
-  connection.query("INSERT INTO dummydata (email, password) VALUES (?, ?)", [req.body.email, req.body.password], (error, results) => {
+  const { firstName, lastName, email, password, phoneNumber, address, city, state, zipCode, country } = req.body;
+
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS dummydata (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      firstName VARCHAR(45),
+      lastName VARCHAR(45),
+      email VARCHAR(45),
+      password VARCHAR(45),
+      phoneNumber INT(15),
+      address VARCHAR(45),
+      city VARCHAR(45),
+      state VARCHAR(45),
+      zipCode INT(10),
+      country VARCHAR(45)
+    );
+  `;
+
+  connection.query(createTableQuery, (error, results) => {
     if (error) {
-      console.error("Error inserting data:", error);
-      return res.status(500).send("Error inserting data");
+      console.error("Error creating table:", error);
+      return res.status(500).send("Error creating table");
     }
-    console.log("Data inserted successfully:", results);
+
+    const insertDataQuery = `
+      INSERT INTO dummydata (firstName, lastName, email, password, phoneNumber, address, city, state, zipCode, country)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    connection.query(insertDataQuery, [firstName, lastName, email, password, phoneNumber, address, city, state, zipCode, country], (error, results) => {
+      if (error) {
+        console.error("Error inserting data:", error);
+        return res.status(500).send("Error inserting data");
+      }
+      console.log("Data inserted successfully:", results);
+      res.send("Data inserted successfully");
+    });
   });
-  res.send(req.body);
-})
+});
 
-app.get("/user",(req,res)=>{
-  const data = connection.query("SELECT * FROM dummydata WHERE email=")
-})
-
-app.listen(port,()=>{
+app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
-})
-
+});
