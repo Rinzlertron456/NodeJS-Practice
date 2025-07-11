@@ -24,6 +24,18 @@ app.get("/", (_, res) => {
   res.send("Hello. Welcome to Home page");
 });
 
+app.get("/users",(req,res)=>{
+  const getAllUsersQuery= "SELECT * FROM dummydata";
+  connection.query(getAllUsersQuery, (error, results) => {
+    if (error) {
+      console.error("Error fetching users data:", error);
+      return res.status(500).send("Error fetching users data");
+    }
+    console.log("Users Data:", results);
+    res.json(results);
+  })
+})
+
 app.post("/form", (req, res) => {
   console.log(req.body);
   const { firstName, lastName, email, password, phoneNumber, address, city, state, zipCode, country } = req.body;
@@ -66,6 +78,27 @@ app.post("/form", (req, res) => {
     });
   });
 });
+
+app.get("/user/:id", (req, res) => {
+  const userId = req.params.id;
+  console.log("User ID:", userId);
+
+  const getUserQuery = "SELECT * FROM dummydata WHERE id = ?";
+  connection.query(getUserQuery, [userId], (error, results) => {
+    if (error) {
+      console.error("Error fetching user data:", error);
+      return res.status(500).send("Error fetching user data");
+    }
+
+    if (results.length > 0) {
+      console.log("User Data:", results[0]);
+      res.json(results[0]); // ✅ FIXED LINE
+    } else {
+      res.status(404).send("User not found");
+    }
+  });
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

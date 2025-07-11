@@ -31,7 +31,7 @@ const Form = () => {
         // } catch (error) {
         //     console.error("Error submitting data:", error);
         // }
-        navigate("/user",{state:data});
+        navigate("/");
     }
     else console.log("Password not matched");
   }
