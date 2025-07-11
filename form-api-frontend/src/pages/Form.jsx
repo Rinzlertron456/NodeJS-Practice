@@ -31,10 +31,9 @@ const Form = () => {
         // } catch (error) {
         //     console.error("Error submitting data:", error);
         // }
+        navigate("/user",{state:data});
     }
     else console.log("Password not matched");
-    
-    navigate("/user",{state:data});
   }
   return (
     <>
@@ -62,7 +61,7 @@ const Form = () => {
                 </div>
                 <div className="form-group">
                     <label>Phone Number</label>
-                    <input type="number" className="form-control" placeholder="Enter Phone Number" value={data.phoneNumber} onChange={(e)=>setData({...data,phoneNumber:e.target.value})} required/>
+                    <input type="text" className="form-control" placeholder="Enter Phone Number" value={data.phoneNumber} onChange={(e)=>setData({...data,phoneNumber:e.target.value})} required/>
                 </div>
                 <div className="form-group">
                     <label>Address</label>
@@ -78,7 +77,7 @@ const Form = () => {
                 </div>
                 <div className="form-group">
                     <label>Zip Code</label>
-                    <input type="number" className="form-control" placeholder="Enter Zip Code" value={data.zipCode} onChange={(e)=>setData({...data,zipCode:e.target.value})} required/>
+                    <input type="text" className="form-control" placeholder="Enter Zip Code" value={data.zipCode} onChange={(e)=>setData({...data,zipCode:e.target.value})} required/>
                 </div>
                 <div className="form-group">
                     <label>Country</label>

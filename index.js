@@ -1,6 +1,6 @@
-const express = require('express');
-const cors = require('cors');
-const { createConnection } = require('mysql2');
+import express from 'express';
+import cors from 'cors';
+import { createConnection } from 'mysql2';
 const app = express();
 const port = 3000;
 
@@ -20,7 +20,7 @@ connection.connect((err) => {
   console.log('Connected to the database.');
 });
 
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.send("Hello. Welcome to Home page");
 });
 
@@ -36,7 +36,7 @@ app.post("/form", (req, res) => {
       lastName VARCHAR(45),
       email VARCHAR(45),
       password VARCHAR(45),
-      phoneNumber INT(15),
+      phoneNumber VARCHAR(45),
       address VARCHAR(45),
       city VARCHAR(45),
       state VARCHAR(45),
@@ -45,7 +45,7 @@ app.post("/form", (req, res) => {
     );
   `;
 
-  connection.query(createTableQuery, (error, results) => {
+  connection.query(createTableQuery, (error) => {
     if (error) {
       console.error("Error creating table:", error);
       return res.status(500).send("Error creating table");
@@ -53,15 +53,15 @@ app.post("/form", (req, res) => {
 
     const insertDataQuery = `
       INSERT INTO dummydata (firstName, lastName, email, password, phoneNumber, address, city, state, zipCode, country)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-    connection.query(insertDataQuery, [firstName, lastName, email, password, phoneNumber, address, city, state, zipCode, country], (error, results) => {
+    connection.query(insertDataQuery, [firstName, lastName, email, password, phoneNumber, address, city, state, zipCode, country], (error) => {
       if (error) {
         console.error("Error inserting data:", error);
         return res.status(500).send("Error inserting data");
       }
-      console.log("Data inserted successfully:", results);
+      console.log("Data inserted successfully");
       res.send("Data inserted successfully");
     });
   });
